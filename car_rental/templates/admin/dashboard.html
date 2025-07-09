@@ -1,0 +1,149 @@
+{% extends 'admin/base.html' %}
+
+{% block title %}Admin Dashboard - Car Rental System{% endblock %}
+
+{% block content %}
+<div class="container py-4">
+    <h2 class="mb-4">Admin Dashboard</h2>
+    
+    <div class="row mb-4">
+        <div class="col-md-3">
+            <div class="card bg-primary text-white mb-3">
+                <div class="card-body">
+                    <h5 class="card-title">Total Vehicles</h5>
+                    <h2 class="display-4">{{ vehicles_count }}</h2>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card bg-success text-white mb-3">
+                <div class="card-body">
+                    <h5 class="card-title">Available</h5>
+                    <h2 class="display-4">{{ available_vehicles }}</h2>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card bg-info text-white mb-3">
+                <div class="card-body">
+                    <h5 class="card-title">Booked</h5>
+                    <h2 class="display-4">{{ booked_vehicles }}</h2>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card bg-warning text-dark mb-3">
+                <div class="card-body">
+                    <h5 class="card-title">Maintenance</h5>
+                    <h2 class="display-4">{{ maintenance_vehicles }}</h2>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="row mb-4">
+        <div class="col-md-4">
+            <div class="card bg-secondary text-white mb-3">
+                <div class="card-body">
+                    <h5 class="card-title">Total Customers</h5>
+                    <h2 class="display-4">{{ customers_count }}</h2>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card bg-primary text-white mb-3">
+                <div class="card-body">
+                    <h5 class="card-title">Active Rentals</h5>
+                    <h2 class="display-4">{{ active_rentals }}</h2>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card bg-success text-white mb-3">
+                <div class="card-body">
+                    <h5 class="card-title">Completed Rentals</h5>
+                    <h2 class="display-4">{{ completed_rentals }}</h2>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="row">
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-header">
+                    <h5>Recent Transactions</h5>
+                </div>
+                <div class="card-body">
+                    {% if recent_transactions %}
+                        <div class="table-responsive">
+                            <table class="table table-hover">
+                                <thead>
+                                    <tr>
+                                        <th>ID</th>
+                                        <th>Date</th>
+                                        <th>Amount</th>
+                                        <th>Status</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for transaction in recent_transactions %}
+                                        <tr>
+                                            <td>{{ transaction.id }}</td>
+                                            <td>{{ transaction.date.strftime('%b %d, %Y') }}</td>
+                                            <td>${{ transaction.amount }}</td>
+                                            <td>
+                                                <span class="badge {% if transaction.status == 'paid' %}bg-success{% else %}bg-warning{% endif %}">
+                                                    {{ transaction.status }}
+                                                </span>
+                                            </td>
+                                        </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    {% else %}
+                        <p class="text-muted">No recent transactions.</p>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+        
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-header">
+                    <h5>Upcoming Rentals</h5>
+                </div>
+                <div class="card-body">
+                    {% if upcoming_rentals %}
+                        <div class="table-responsive">
+                            <table class="table table-hover">
+                                <thead>
+                                    <tr>
+                                        <th>ID</th>
+                                        <th>Vehicle</th>
+                                        <th>Customer</th>
+                                        <th>Start Date</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for rental in upcoming_rentals %}
+                                        <tr>
+                                            <td>{{ rental.id }}</td>
+                                            <td>{{ rental.car.name }}</td>
+                                            <td>{{ rental.customer.fname }} {{ rental.customer.lname }}</td>
+                                            <td>{{ rental.date_rent.strftime('%b %d, %Y') }}</td>
+                                        </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    {% else %}
+                        <p class="text-muted">No upcoming rentals.</p>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %} 

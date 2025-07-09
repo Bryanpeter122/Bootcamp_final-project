@@ -1,0 +1,105 @@
+{% extends 'base.html' %}
+
+{% block title %}My Profile - Car Rental System{% endblock %}
+
+{% block content %}
+<div class="container py-4">
+    <div class="row">
+        <div class="col-md-4 mb-4">
+            <div class="card">
+                <div class="card-header">
+                    <h4>Profile Information</h4>
+                </div>
+                <div class="card-body">
+                    <div class="text-center mb-4">
+                        <div class="avatar-placeholder bg-primary text-white rounded-circle d-flex align-items-center justify-content-center mx-auto" style="width: 100px; height: 100px; font-size: 2.5rem;">
+                            {{ user.fname[0] }}{{ user.lname[0] }}
+                        </div>
+                        <h4 class="mt-3">{{ user.fname }} {{ user.lname }}</h4>
+                        <p class="text-muted">{{ user.role|capitalize }}</p>
+                    </div>
+                    
+                    <ul class="list-group list-group-flush">
+                        <li class="list-group-item d-flex justify-content-between align-items-center">
+                            <span><i class="fas fa-envelope me-2"></i> Email</span>
+                            <span>{{ user.email }}</span>
+                        </li>
+                        <li class="list-group-item d-flex justify-content-between align-items-center">
+                            <span><i class="fas fa-phone me-2"></i> Phone</span>
+                            <span>{{ user.phone or 'Not provided' }}</span>
+                        </li>
+                        <li class="list-group-item d-flex justify-content-between align-items-center">
+                            <span><i class="fas fa-user me-2"></i> Gender</span>
+                            <span>{{ user.gender or 'Not provided' }}</span>
+                        </li>
+                        <li class="list-group-item d-flex justify-content-between align-items-center">
+                            <span><i class="fas fa-birthday-cake me-2"></i> Age</span>
+                            <span>{{ user.age or 'Not provided' }}</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        
+        <div class="col-md-8">
+            <div class="card">
+                <div class="card-header">
+                    <h4>Edit Profile</h4>
+                </div>
+                <div class="card-body">
+                    <form action="{{ url_for('update_profile') }}" method="POST">
+                        <div class="row mb-3">
+                            <div class="col-md-6">
+                                <label for="fname" class="form-label">First Name</label>
+                                <input type="text" class="form-control" id="fname" name="fname" value="{{ user.fname }}" required>
+                            </div>
+                            <div class="col-md-6">
+                                <label for="lname" class="form-label">Last Name</label>
+                                <input type="text" class="form-control" id="lname" name="lname" value="{{ user.lname }}" required>
+                            </div>
+                        </div>
+                        
+                        <div class="row mb-3">
+                            <div class="col-md-6">
+                                <label for="email" class="form-label">Email</label>
+                                <input type="email" class="form-control" id="email" value="{{ user.email }}" disabled>
+                                <small class="text-muted">Email cannot be changed</small>
+                            </div>
+                            <div class="col-md-6">
+                                <label for="phone" class="form-label">Phone Number</label>
+                                <input type="tel" class="form-control" id="phone" name="phone" value="{{ user.phone or '' }}">
+                            </div>
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label for="contact_add" class="form-label">Contact Address</label>
+                            <textarea class="form-control" id="contact_add" name="contact_add" rows="3">{{ user.contact_add or '' }}</textarea>
+                        </div>
+                        
+                        <hr class="my-4">
+                        
+                        <h5>Change Password</h5>
+                        <p class="text-muted mb-3">Leave blank if you don't want to change your password</p>
+                        
+                        <div class="row mb-3">
+                            <div class="col-md-6">
+                                <label for="current_password" class="form-label">Current Password</label>
+                                <input type="password" class="form-control" id="current_password" name="current_password">
+                            </div>
+                            <div class="col-md-6">
+                                <label for="new_password" class="form-label">New Password</label>
+                                <input type="password" class="form-control" id="new_password" name="new_password">
+                            </div>
+                        </div>
+                        
+                        <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                            <button type="reset" class="btn btn-secondary">Reset</button>
+                            <button type="submit" class="btn btn-primary">Save Changes</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %} 

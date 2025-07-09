@@ -1,0 +1,69 @@
+{% extends 'base.html' %}
+
+{% block title %}Register - Car Rental System{% endblock %}
+
+{% block content %}
+<div class="auth-container">
+    <div class="auth-header">
+        <h2>User Registration</h2>
+        <p class="text-muted">Create your account to start renting cars</p>
+    </div>
+    
+    <form method="POST" action="{{ url_for('register') }}">
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group mb-3">
+                    <label for="fname" class="form-label">First Name</label>
+                    <input type="text" id="fname" name="fname" class="form-control" placeholder="Enter your first name" required>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group mb-3">
+                    <label for="lname" class="form-label">Last Name</label>
+                    <input type="text" id="lname" name="lname" class="form-control" placeholder="Enter your last name" required>
+                </div>
+            </div>
+        </div>
+        
+        <div class="form-group mb-3">
+            <label for="email" class="form-label">Email</label>
+            <input type="email" id="email" name="email" class="form-control" placeholder="Enter your email" required>
+        </div>
+        
+        <div class="form-group mb-3">
+            <label for="phone" class="form-label">Phone Number</label>
+            <input type="tel" id="phone" name="phone" class="form-control" placeholder="Enter your phone number">
+        </div>
+        
+        <div class="form-group mb-3">
+            <label for="password" class="form-label">Password</label>
+            <input type="password" id="password" name="password" class="form-control" placeholder="Enter your password" required>
+        </div>
+        
+        <div class="form-group mb-3">
+            <label for="confirm_password" class="form-label">Confirm Password</label>
+            <input type="password" id="confirm_password" name="confirm_password" class="form-control" placeholder="Confirm your password" required>
+        </div>
+        
+        <!-- Hidden role field defaulting to customer -->
+        <input type="hidden" name="role" value="customer">
+        
+        <div class="form-group mb-3">
+            <div class="form-check">
+                <input class="form-check-input" type="checkbox" id="terms" required>
+                <label class="form-check-label" for="terms">
+                    I agree to the <a href="#" class="text-decoration-none">Terms and Conditions</a>
+                </label>
+            </div>
+        </div>
+        
+        <div class="d-grid gap-2 mb-3">
+            <button type="submit" class="btn btn-primary btn-block">Register</button>
+        </div>
+    </form>
+    
+    <div class="auth-footer">
+        <p>Already have an account? <a href="{{ url_for('login') }}" class="text-decoration-none">Back to Login</a></p>
+    </div>
+</div>
+{% endblock %} 

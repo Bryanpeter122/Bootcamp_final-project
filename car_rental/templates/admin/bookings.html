@@ -1,0 +1,266 @@
+{% extends 'admin/base.html' %}
+
+{% block title %}Bookings Management{% endblock %}
+
+{% block header %}Bookings Management{% endblock %}
+
+{% block content %}
+<div class="card">
+    <div class="card-body">
+        <ul class="nav nav-tabs mb-3" id="bookingsTab" role="tablist">
+            <li class="nav-item" role="presentation">
+                <button class="nav-link active" id="all-tab" data-bs-toggle="tab" data-bs-target="#all-bookings" type="button" role="tab" aria-controls="all-bookings" aria-selected="true">All Bookings</button>
+            </li>
+            <li class="nav-item" role="presentation">
+                <button class="nav-link" id="pending-tab" data-bs-toggle="tab" data-bs-target="#pending-bookings" type="button" role="tab" aria-controls="pending-bookings" aria-selected="false">Pending</button>
+            </li>
+            <li class="nav-item" role="presentation">
+                <button class="nav-link" id="confirmed-tab" data-bs-toggle="tab" data-bs-target="#confirmed-bookings" type="button" role="tab" aria-controls="confirmed-bookings" aria-selected="false">Confirmed</button>
+            </li>
+            <li class="nav-item" role="presentation">
+                <button class="nav-link" id="active-tab" data-bs-toggle="tab" data-bs-target="#active-bookings" type="button" role="tab" aria-controls="active-bookings" aria-selected="false">Active</button>
+            </li>
+            <li class="nav-item" role="presentation">
+                <button class="nav-link" id="completed-tab" data-bs-toggle="tab" data-bs-target="#completed-bookings" type="button" role="tab" aria-controls="completed-bookings" aria-selected="false">Completed</button>
+            </li>
+            <li class="nav-item" role="presentation">
+                <button class="nav-link" id="canceled-tab" data-bs-toggle="tab" data-bs-target="#canceled-bookings" type="button" role="tab" aria-controls="canceled-bookings" aria-selected="false">Canceled</button>
+            </li>
+        </ul>
+        <div class="tab-content" id="bookingsTabContent">
+            <div class="tab-pane fade show active" id="all-bookings" role="tabpanel" aria-labelledby="all-tab">
+                <div class="table-responsive">
+                    <table class="table table-striped table-hover">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Customer</th>
+                                <th>Vehicle</th>
+                                <th>Dates</th>
+                                <th>Payment</th>
+                                <th>Status</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for rental in rentals %}
+                            <tr>
+                                <td>{{ rental.id }}</td>
+                                <td>{{ rental.customer.fname }} {{ rental.customer.lname }}</td>
+                                <td>{{ rental.car.name }}</td>
+                                <td>{{ rental.date_rent }} to {{ rental.date_return }}</td>
+                                <td>${{ "%.2f"|format(rental.payment) }}</td>
+                                <td>
+                                    <span class="badge 
+                                        {% if rental.status == 'pending' %}bg-warning
+                                        {% elif rental.status == 'confirmed' %}bg-info
+                                        {% elif rental.status == 'active' %}bg-primary
+                                        {% elif rental.status == 'completed' %}bg-success
+                                        {% else %}bg-danger{% endif %}">
+                                        {{ rental.status }}
+                                    </span>
+                                </td>
+                                <td>
+                                    <a href="{{ url_for('admin.view_booking', rental_id=rental.id) }}" class="btn btn-sm btn-primary">
+                                        <i class="bi bi-eye"></i>
+                                    </a>
+                                </td>
+                            </tr>
+                            {% else %}
+                            <tr>
+                                <td colspan="7" class="text-center">No bookings found</td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            
+            <div class="tab-pane fade" id="pending-bookings" role="tabpanel" aria-labelledby="pending-tab">
+                <div class="table-responsive">
+                    <table class="table table-striped table-hover">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Customer</th>
+                                <th>Vehicle</th>
+                                <th>Dates</th>
+                                <th>Payment</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for rental in rentals if rental.status == 'pending' %}
+                            <tr>
+                                <td>{{ rental.id }}</td>
+                                <td>{{ rental.customer.fname }} {{ rental.customer.lname }}</td>
+                                <td>{{ rental.car.name }}</td>
+                                <td>{{ rental.date_rent }} to {{ rental.date_return }}</td>
+                                <td>${{ "%.2f"|format(rental.payment) }}</td>
+                                <td>
+                                    <a href="{{ url_for('admin.view_booking', rental_id=rental.id) }}" class="btn btn-sm btn-primary">
+                                        <i class="bi bi-eye"></i>
+                                    </a>
+                                </td>
+                            </tr>
+                            {% else %}
+                            <tr>
+                                <td colspan="6" class="text-center">No pending bookings found</td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            
+            <div class="tab-pane fade" id="confirmed-bookings" role="tabpanel" aria-labelledby="confirmed-tab">
+                <div class="table-responsive">
+                    <table class="table table-striped table-hover">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Customer</th>
+                                <th>Vehicle</th>
+                                <th>Dates</th>
+                                <th>Payment</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for rental in rentals if rental.status == 'confirmed' %}
+                            <tr>
+                                <td>{{ rental.id }}</td>
+                                <td>{{ rental.customer.fname }} {{ rental.customer.lname }}</td>
+                                <td>{{ rental.car.name }}</td>
+                                <td>{{ rental.date_rent }} to {{ rental.date_return }}</td>
+                                <td>${{ "%.2f"|format(rental.payment) }}</td>
+                                <td>
+                                    <a href="{{ url_for('admin.view_booking', rental_id=rental.id) }}" class="btn btn-sm btn-primary">
+                                        <i class="bi bi-eye"></i>
+                                    </a>
+                                </td>
+                            </tr>
+                            {% else %}
+                            <tr>
+                                <td colspan="6" class="text-center">No confirmed bookings found</td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            
+            <div class="tab-pane fade" id="active-bookings" role="tabpanel" aria-labelledby="active-tab">
+                <div class="table-responsive">
+                    <table class="table table-striped table-hover">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Customer</th>
+                                <th>Vehicle</th>
+                                <th>Dates</th>
+                                <th>Payment</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for rental in rentals if rental.status == 'active' %}
+                            <tr>
+                                <td>{{ rental.id }}</td>
+                                <td>{{ rental.customer.fname }} {{ rental.customer.lname }}</td>
+                                <td>{{ rental.car.name }}</td>
+                                <td>{{ rental.date_rent }} to {{ rental.date_return }}</td>
+                                <td>${{ "%.2f"|format(rental.payment) }}</td>
+                                <td>
+                                    <a href="{{ url_for('admin.view_booking', rental_id=rental.id) }}" class="btn btn-sm btn-primary">
+                                        <i class="bi bi-eye"></i>
+                                    </a>
+                                </td>
+                            </tr>
+                            {% else %}
+                            <tr>
+                                <td colspan="6" class="text-center">No active bookings found</td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            
+            <div class="tab-pane fade" id="completed-bookings" role="tabpanel" aria-labelledby="completed-tab">
+                <div class="table-responsive">
+                    <table class="table table-striped table-hover">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Customer</th>
+                                <th>Vehicle</th>
+                                <th>Dates</th>
+                                <th>Payment</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for rental in rentals if rental.status == 'completed' %}
+                            <tr>
+                                <td>{{ rental.id }}</td>
+                                <td>{{ rental.customer.fname }} {{ rental.customer.lname }}</td>
+                                <td>{{ rental.car.name }}</td>
+                                <td>{{ rental.date_rent }} to {{ rental.date_return }}</td>
+                                <td>${{ "%.2f"|format(rental.payment) }}</td>
+                                <td>
+                                    <a href="{{ url_for('admin.view_booking', rental_id=rental.id) }}" class="btn btn-sm btn-primary">
+                                        <i class="bi bi-eye"></i>
+                                    </a>
+                                </td>
+                            </tr>
+                            {% else %}
+                            <tr>
+                                <td colspan="6" class="text-center">No completed bookings found</td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            
+            <div class="tab-pane fade" id="canceled-bookings" role="tabpanel" aria-labelledby="canceled-tab">
+                <div class="table-responsive">
+                    <table class="table table-striped table-hover">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Customer</th>
+                                <th>Vehicle</th>
+                                <th>Dates</th>
+                                <th>Payment</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for rental in rentals if rental.status == 'canceled' %}
+                            <tr>
+                                <td>{{ rental.id }}</td>
+                                <td>{{ rental.customer.fname }} {{ rental.customer.lname }}</td>
+                                <td>{{ rental.car.name }}</td>
+                                <td>{{ rental.date_rent }} to {{ rental.date_return }}</td>
+                                <td>${{ "%.2f"|format(rental.payment) }}</td>
+                                <td>
+                                    <a href="{{ url_for('admin.view_booking', rental_id=rental.id) }}" class="btn btn-sm btn-primary">
+                                        <i class="bi bi-eye"></i>
+                                    </a>
+                                </td>
+                            </tr>
+                            {% else %}
+                            <tr>
+                                <td colspan="6" class="text-center">No canceled bookings found</td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %} 

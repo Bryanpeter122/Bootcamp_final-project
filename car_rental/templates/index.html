@@ -1,0 +1,213 @@
+{% extends 'base.html' %}
+
+{% block title %}Home - Car Rental System{% endblock %}
+
+{% block content %}
+<div class="hero-section py-5 bg-primary text-white text-center">
+    <div class="container">
+        <h1 class="display-4 mb-4">Find Your Perfect Rental Car</h1>
+        <p class="lead mb-4">Choose from our wide selection of vehicles for any occasion</p>
+        <a href="{{ url_for('cars') }}" class="btn btn-light btn-lg">Browse Cars</a>
+    </div>
+</div>
+
+<div class="features-section py-5">
+    <div class="container">
+        <h2 class="text-center mb-5">Why Choose Us</h2>
+        <div class="row">
+            <div class="col-md-4 mb-4">
+                <div class="card h-100 text-center p-4">
+                    <div class="card-body">
+                        <i class="fas fa-car fa-3x mb-3 text-primary"></i>
+                        <h3>Wide Selection</h3>
+                        <p>Choose from a variety of cars including luxury, economy, and SUVs to suit your needs.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 mb-4">
+                <div class="card h-100 text-center p-4">
+                    <div class="card-body">
+                        <i class="fas fa-money-bill-wave fa-3x mb-3 text-primary"></i>
+                        <h3>Best Prices</h3>
+                        <p>We offer competitive rates with no hidden charges or fees. Get the best value for your money.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 mb-4">
+                <div class="card h-100 text-center p-4">
+                    <div class="card-body">
+                        <i class="fas fa-headset fa-3x mb-3 text-primary"></i>
+                        <h3>24/7 Support</h3>
+                        <p>Our customer service team is available round the clock to assist with any issues or inquiries.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="how-it-works py-5 bg-light">
+    <div class="container">
+        <h2 class="text-center mb-5">How It Works</h2>
+        <div class="row">
+            <div class="col-md-3 mb-4">
+                <div class="text-center">
+                    <div class="circle-icon mb-3">
+                        <i class="fas fa-search"></i>
+                    </div>
+                    <h4>Search</h4>
+                    <p>Browse our selection of cars and find the perfect one for your needs.</p>
+                </div>
+            </div>
+            <div class="col-md-3 mb-4">
+                <div class="text-center">
+                    <div class="circle-icon mb-3">
+                        <i class="fas fa-calendar-alt"></i>
+                    </div>
+                    <h4>Book</h4>
+                    <p>Select your pickup and return dates and book your car.</p>
+                </div>
+            </div>
+            <div class="col-md-3 mb-4">
+                <div class="text-center">
+                    <div class="circle-icon mb-3">
+                        <i class="fas fa-credit-card"></i>
+                    </div>
+                    <h4>Pay</h4>
+                    <p>Make a secure payment to confirm your booking.</p>
+                </div>
+            </div>
+            <div class="col-md-3 mb-4">
+                <div class="text-center">
+                    <div class="circle-icon mb-3">
+                        <i class="fas fa-car"></i>
+                    </div>
+                    <h4>Drive</h4>
+                    <p>Pick up your car and enjoy your trip with peace of mind.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="featured-cars py-5">
+    <div class="container">
+        <h2 class="text-center mb-5">Featured Cars</h2>
+        <div class="row">
+            <div class="col-md-4 mb-4">
+                <div class="card car-card">
+                    <img src="{{ url_for('static', filename='images/toyota camry.jpg') }}" alt="Toyota Camry" class="card-img-top car-img">
+                    <div class="card-body">
+                        <h5 class="card-title">Toyota Camry</h5>
+                        <p class="card-text">A comfortable and reliable sedan perfect for business trips or family vacations.</p>
+                        <div class="d-flex justify-content-between align-items-center">
+                            <span class="price">$50/day</span>
+                            <a href="{{ url_for('cars') }}" class="btn btn-primary">View Details</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 mb-4">
+                <div class="card car-card">
+                    <img src="{{ url_for('static', filename='images/Honda CR-V.jpg') }}" alt="Honda CR-V" class="card-img-top car-img">
+                    <div class="card-body">
+                        <h5 class="card-title">Honda CR-V</h5>
+                        <p class="card-text">A spacious SUV with excellent fuel economy and plenty of cargo space.</p>
+                        <div class="d-flex justify-content-between align-items-center">
+                            <span class="price">$65/day</span>
+                            <a href="{{ url_for('cars') }}" class="btn btn-primary">View Details</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 mb-4">
+                <div class="card car-card">
+                    <img src="{{ url_for('static', filename='images/Ford Mustang.jpg') }}" alt="Ford Mustang" class="card-img-top car-img">
+                    <div class="card-body">
+                        <h5 class="card-title"></h5>
+                        <p class="card-text">Experience the thrill of driving this iconic American muscle car.</p>
+                        <div class="d-flex justify-content-between align-items-center">
+                            <span class="price">$85/day</span>
+                            <a href="{{ url_for('cars') }}" class="btn btn-primary">View Details</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="text-center mt-4">
+            <a href="{{ url_for('cars') }}" class="btn btn-lg btn-outline-primary">View All Cars</a>
+        </div>
+    </div>
+</div>
+
+<div class="testimonials py-5 bg-light">
+    <div class="container">
+        <h2 class="text-center mb-5">What Our Customers Say</h2>
+        <div class="row">
+            <div class="col-md-4 mb-4">
+                <div class="card h-100">
+                    <div class="card-body">
+                        <div class="testimonial-stars mb-3">
+                            <i class="fas fa-star text-warning"></i>
+                            <i class="fas fa-star text-warning"></i>
+                            <i class="fas fa-star text-warning"></i>
+                            <i class="fas fa-star text-warning"></i>
+                            <i class="fas fa-star text-warning"></i>
+                        </div>
+                        <p class="card-text">"The service was exceptional! The car was in perfect condition and the staff was very friendly and helpful."</p>
+                        <div class="testimonial-author">
+                            <h6 class="mb-0">John D.</h6>
+                            <small class="text-muted">Business Traveler</small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 mb-4">
+                <div class="card h-100">
+                    <div class="card-body">
+                        <div class="testimonial-stars mb-3">
+                            <i class="fas fa-star text-warning"></i>
+                            <i class="fas fa-star text-warning"></i>
+                            <i class="fas fa-star text-warning"></i>
+                            <i class="fas fa-star text-warning"></i>
+                            <i class="fas fa-star text-warning"></i>
+                        </div>
+                        <p class="card-text">"I've used this service multiple times and have always had a great experience. The booking process is easy and the prices are reasonable."</p>
+                        <div class="testimonial-author">
+                            <h6 class="mb-0">Sarah M.</h6>
+                            <small class="text-muted">Frequent Traveler</small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 mb-4">
+                <div class="card h-100">
+                    <div class="card-body">
+                        <div class="testimonial-stars mb-3">
+                            <i class="fas fa-star text-warning"></i>
+                            <i class="fas fa-star text-warning"></i>
+                            <i class="fas fa-star text-warning"></i>
+                            <i class="fas fa-star text-warning"></i>
+                            <i class="fas fa-star-half-alt text-warning"></i>
+                        </div>
+                        <p class="card-text">"The car we rented was perfect for our family vacation. Clean, spacious, and fuel-efficient. We'll definitely use this service again!"</p>
+                        <div class="testimonial-author">
+                            <h6 class="mb-0">Michael K.</h6>
+                            <small class="text-muted">Family Traveler</small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="cta-section py-5 bg-primary text-white text-center">
+    <div class="container">
+        <h2 class="mb-4">Ready to Book Your Next Car?</h2>
+        <p class="lead mb-4">Sign up now and get access to exclusive deals and discounts</p>
+        <a href="{{ url_for('register') }}" class="btn btn-light btn-lg me-2">Register Now</a>
+        <a href="{{ url_for('cars') }}" class="btn btn-outline-light btn-lg">Browse Cars</a>
+    </div>
+</div>
+{% endblock %} 

@@ -1,0 +1,56 @@
+{% extends 'admin/base.html' %}
+
+{% block title %}Add Maintenance Record{% endblock %}
+
+{% block header %}Add Maintenance Record{% endblock %}
+
+{% block header_buttons %}
+<a href="{{ url_for('admin.maintenance') }}" class="btn btn-secondary">
+    <i class="bi bi-arrow-left"></i> Back to Maintenance
+</a>
+{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-md-8 mx-auto">
+        <div class="card">
+            <div class="card-body">
+                <form action="{{ url_for('admin.add_maintenance') }}" method="POST">
+                    <div class="mb-3">
+                        <label for="car_id" class="form-label">Vehicle</label>
+                        <select class="form-select" id="car_id" name="car_id" required>
+                            <option value="">Select Vehicle</option>
+                            {% for car in cars %}
+                            <option value="{{ car.id }}">{{ car.name }} ({{ car.brand }} {{ car.model }})</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <label for="date" class="form-label">Maintenance Date</label>
+                        <input type="date" class="form-control" id="date" name="date" 
+                               value="{{ now.strftime('%Y-%m-%d') }}" 
+                               min="2000-01-01" max="9999-12-31" required>
+                        <small class="form-text text-muted">Date format: YYYY-MM-DD</small>
+                    </div>
+                    <div class="mb-3">
+                        <label for="issue" class="form-label">Issue / Description</label>
+                        <textarea class="form-control" id="issue" name="issue" rows="3" required></textarea>
+                    </div>
+                    <div class="mb-3">
+                        <label for="status" class="form-label">Status</label>
+                        <select class="form-select" id="status" name="status" required>
+                            <option value="pending">Pending</option>
+                            <option value="in-progress">In Progress</option>
+                            <option value="completed">Completed</option>
+                        </select>
+                    </div>
+                    <div class="text-end mt-4">
+                        <button type="reset" class="btn btn-secondary">Reset</button>
+                        <button type="submit" class="btn btn-primary">Save Record</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %} 

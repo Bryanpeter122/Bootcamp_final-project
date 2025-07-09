@@ -1,0 +1,94 @@
+{% extends 'admin/base.html' %}
+
+{% block title %}Edit Vehicle{% endblock %}
+
+{% block header %}Edit Vehicle: {{ car.name }}{% endblock %}
+
+{% block header_buttons %}
+<a href="{{ url_for('admin.vehicles') }}" class="btn btn-secondary">
+    <i class="bi bi-arrow-left"></i> Back to Vehicles
+</a>
+{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-md-8 mx-auto">
+        <div class="card">
+            <div class="card-body">
+                <form action="{{ url_for('admin.edit_vehicle', car_id=car.id) }}" method="POST" enctype="multipart/form-data">
+                    <div class="row mb-3">
+                        <div class="col-md-6">
+                            <label for="name" class="form-label">Vehicle Name</label>
+                            <input type="text" class="form-control" id="name" name="name" value="{{ car.name }}" required>
+                        </div>
+                        <div class="col-md-6">
+                            <label for="brand" class="form-label">Brand</label>
+                            <input type="text" class="form-control" id="brand" name="brand" value="{{ car.brand }}" required>
+                        </div>
+                    </div>
+                    <div class="row mb-3">
+                        <div class="col-md-6">
+                            <label for="model" class="form-label">Model</label>
+                            <input type="text" class="form-control" id="model" name="model" value="{{ car.model }}" required>
+                        </div>
+                        <div class="col-md-6">
+                            <label for="year" class="form-label">Year</label>
+                            <input type="number" class="form-control" id="year" name="year" min="1900" max="2099" step="1" value="{{ car.year }}" required>
+                        </div>
+                    </div>
+                    <div class="row mb-3">
+                        <div class="col-md-6">
+                            <label for="car_type" class="form-label">Vehicle Type</label>
+                            <select class="form-select" id="car_type" name="car_type" required>
+                                <option value="">Select Type</option>
+                                <option value="Sedan" {% if car.car_type == 'Sedan' %}selected{% endif %}>Sedan</option>
+                                <option value="SUV" {% if car.car_type == 'SUV' %}selected{% endif %}>SUV</option>
+                                <option value="Truck" {% if car.car_type == 'Truck' %}selected{% endif %}>Truck</option>
+                                <option value="Van" {% if car.car_type == 'Van' %}selected{% endif %}>Van</option>
+                                <option value="Convertible" {% if car.car_type == 'Convertible' %}selected{% endif %}>Convertible</option>
+                                <option value="Sports Car" {% if car.car_type == 'Sports Car' %}selected{% endif %}>Sports Car</option>
+                                <option value="Luxury" {% if car.car_type == 'Luxury' %}selected{% endif %}>Luxury</option>
+                                <option value="Electric" {% if car.car_type == 'Electric' %}selected{% endif %}>Electric</option>
+                                <option value="Hybrid" {% if car.car_type == 'Hybrid' %}selected{% endif %}>Hybrid</option>
+                            </select>
+                        </div>
+                        <div class="col-md-6">
+                            <label for="daily_price" class="form-label">Daily Price ($)</label>
+                            <input type="number" class="form-control" id="daily_price" name="daily_price" min="0" step="0.01" value="{{ car.daily_price }}" required>
+                        </div>
+                    </div>
+                    <div class="row mb-3">
+                        <div class="col-md-6">
+                            <label for="status" class="form-label">Status</label>
+                            <select class="form-select" id="status" name="status" required>
+                                <option value="available" {% if car.status == 'available' %}selected{% endif %}>Available</option>
+                                <option value="booked" {% if car.status == 'booked' %}selected{% endif %}>Booked</option>
+                                <option value="rented" {% if car.status == 'rented' %}selected{% endif %}>Rented</option>
+                                <option value="maintenance" {% if car.status == 'maintenance' %}selected{% endif %}>Maintenance</option>
+                            </select>
+                        </div>
+                        <div class="col-md-6">
+                            <label for="image" class="form-label">Vehicle Image</label>
+                            <input type="file" class="form-control" id="image" name="image" accept="image/*">
+                            <small class="text-muted">Leave empty to keep current image</small>
+                        </div>
+                    </div>
+                    <div class="row mb-3">
+                        <div class="col-md-6">
+                            <label class="form-label">Current Image</label>
+                            <div>
+                                <img src="{{ url_for('static', filename='images/' + car.image) }}" alt="{{ car.name }}" class="img-thumbnail" style="max-width: 200px;">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="text-end mt-4">
+                        <button type="reset" class="btn btn-secondary">Reset</button>
+                        <button type="submit" class="btn btn-primary">Update Vehicle</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %} 
+ 

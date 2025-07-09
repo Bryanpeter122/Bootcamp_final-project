@@ -1,0 +1,102 @@
+{% extends 'base.html' %}
+
+{% block title %}Booking Confirmation - Car Rental System{% endblock %}
+
+{% block content %}
+<div class="booking-confirmation-container">
+    <div class="row mb-4">
+        <div class="col-12">
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="{{ url_for('index') }}">Home</a></li>
+                    <li class="breadcrumb-item"><a href="{{ url_for('cars') }}">Cars</a></li>
+                    <li class="breadcrumb-item"><a href="{{ url_for('car_details', car_id=rental.car.id) }}">{{ rental.car.name }}</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">Booking Confirmation</li>
+                </ol>
+            </nav>
+        </div>
+    </div>
+    
+    <div class="card mb-4">
+        <div class="card-header bg-success text-white">
+            <h3 class="mb-0">Booking Confirmation</h3>
+        </div>
+        <div class="card-body">
+            <div class="alert alert-success mb-4">
+                <h4 class="alert-heading">Booking Created Successfully!</h4>
+                <p>Your booking has been created and is waiting for payment. Please review the details below and proceed to payment.</p>
+            </div>
+            
+            <div class="row">
+                <div class="col-md-6">
+                    <h4>Booking Details</h4>
+                    <table class="table">
+                        <tr>
+                            <th>Booking ID:</th>
+                            <td>#{{ rental.id }}</td>
+                        </tr>
+                        <tr>
+                            <th>Car:</th>
+                            <td>{{ rental.car.name }}</td>
+                        </tr>
+                        <tr>
+                            <th>Start Date:</th>
+                            <td>{{ rental.date_rent.strftime('%b %d, %Y') }}</td>
+                        </tr>
+                        <tr>
+                            <th>End Date:</th>
+                            <td>{{ rental.date_return.strftime('%b %d, %Y') }}</td>
+                        </tr>
+                        <tr>
+                            <th>Pickup Time:</th>
+                            <td>{{ rental.time_depart }}</td>
+                        </tr>
+                        <tr>
+                            <th>Destination:</th>
+                            <td>{{ rental.destination }}</td>
+                        </tr>
+                        <tr>
+                            <th>Status:</th>
+                            <td><span class="badge bg-warning">{{ rental.status|capitalize }}</span></td>
+                        </tr>
+                    </table>
+                </div>
+                <div class="col-md-6">
+                    <h4>Payment Summary</h4>
+                    <table class="table">
+                        <tr>
+                            <th>Daily Rate:</th>
+                            <td>${{ rental.car.daily_price }}</td>
+                        </tr>
+                        <tr>
+                            <th>Number of Days:</th>
+                            <td>{{ (rental.date_return - rental.date_rent).days + 1 }}</td>
+                        </tr>
+                        <tr>
+                            <th>Total Amount:</th>
+                            <td class="fw-bold">${{ rental.payment }}</td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <div class="card-footer">
+            <div class="d-flex justify-content-between">
+                <a href="{{ url_for('my_rentals') }}" class="btn btn-outline-secondary">View My Rentals</a>
+                <a href="{{ url_for('payment', rental_id=rental.id) }}" class="btn btn-primary">Proceed to Payment</a>
+            </div>
+        </div>
+    </div>
+    
+    <div class="card">
+        <div class="card-header">
+            <h4>Need Help?</h4>
+        </div>
+        <div class="card-body">
+            <p>If you have any questions or need assistance with your booking, please contact our customer support:</p>
+            <p><i class="fas fa-phone me-2"></i> +1 234 567 890</p>
+            <p><i class="fas fa-envelope me-2"></i> support@carrentalsystem.com</p>
+        </div>
+    </div>
+</div>
+{% endblock %} 

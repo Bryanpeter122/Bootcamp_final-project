@@ -1,0 +1,59 @@
+{% extends 'admin/base.html' %}
+
+{% block title %}Edit Maintenance Record{% endblock %}
+
+{% block header %}Edit Maintenance Record{% endblock %}
+
+{% block header_buttons %}
+<a href="{{ url_for('admin.maintenance') }}" class="btn btn-secondary">
+    <i class="bi bi-arrow-left"></i> Back to Maintenance
+</a>
+{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-md-8 mx-auto">
+        <div class="card">
+            <div class="card-body">
+                <form action="{{ url_for('admin.edit_maintenance', maintenance_id=maintenance.id) }}" method="POST">
+                    <div class="mb-3">
+                        <label for="car_id" class="form-label">Vehicle</label>
+                        <select class="form-select" id="car_id" name="car_id" required>
+                            <option value="">Select Vehicle</option>
+                            {% for car in cars %}
+                            <option value="{{ car.id }}" {% if car.id == maintenance.car_id %}selected{% endif %}>
+                                {{ car.name }} ({{ car.brand }} {{ car.model }})
+                            </option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <label for="date" class="form-label">Maintenance Date</label>
+                        <input type="date" class="form-control" id="date" name="date" 
+                               value="{{ maintenance.date }}" 
+                               min="2000-01-01" max="9999-12-31" required>
+                        <small class="form-text text-muted">Date format: YYYY-MM-DD</small>
+                    </div>
+                    <div class="mb-3">
+                        <label for="issue" class="form-label">Issue / Description</label>
+                        <textarea class="form-control" id="issue" name="issue" rows="3" required>{{ maintenance.issue }}</textarea>
+                    </div>
+                    <div class="mb-3">
+                        <label for="status" class="form-label">Status</label>
+                        <select class="form-select" id="status" name="status" required>
+                            <option value="pending" {% if maintenance.status == 'pending' %}selected{% endif %}>Pending</option>
+                            <option value="in-progress" {% if maintenance.status == 'in-progress' %}selected{% endif %}>In Progress</option>
+                            <option value="completed" {% if maintenance.status == 'completed' %}selected{% endif %}>Completed</option>
+                            <option value="Under Maintenance" {% if maintenance.status == 'Under Maintenance' %}selected{% endif %}>Under Maintenance</option>
+                        </select>
+                    </div>
+                    <div class="text-end mt-4">
+                        <a href="{{ url_for('admin.maintenance') }}" class="btn btn-secondary">Cancel</a>
+                        <button type="submit" class="btn btn-primary">Update Record</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %} 

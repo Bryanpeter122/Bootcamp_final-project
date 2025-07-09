@@ -1,0 +1,208 @@
+{% extends 'base.html' %}
+
+{% block title %}{{ car.name }} - Car Rental System{% endblock %}
+
+{% block content %}
+<div class="car-details-container">
+    <div class="row mb-4">
+        <div class="col-12">
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="{{ url_for('index') }}">Home</a></li>
+                    <li class="breadcrumb-item"><a href="{{ url_for('cars') }}">Cars</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">{{ car.name }}</li>
+                </ol>
+            </nav>
+        </div>
+    </div>
+    
+    <div class="row mb-5">
+        <div class="col-md-6 mb-4">
+            <div class="car-image-container">
+                <img src="{{ url_for('static', filename='images/' + car.image) }}" alt="{{ car.name }}" class="img-fluid rounded">
+            </div>
+        </div>
+        <div class="col-md-6">
+            <h1 class="mb-3">{{ car.name }}</h1>
+            <div class="car-meta mb-4">
+                <span class="badge bg-primary me-2">{{ car.brand }}</span>
+                <span class="badge bg-secondary me-2">{{ car.car_type }}</span>
+                <span class="badge bg-success">{{ car.status|capitalize }}</span>
+            </div>
+            <div class="car-specs mb-4">
+                <div class="row">
+                    <div class="col-6 mb-3">
+                        <div class="d-flex align-items-center">
+                            <i class="fas fa-car-side me-2 text-primary"></i>
+                            <span><strong>Model:</strong> {{ car.model }}</span>
+                        </div>
+                    </div>
+                    <div class="col-6 mb-3">
+                        <div class="d-flex align-items-center">
+                            <i class="fas fa-calendar-alt me-2 text-primary"></i>
+                            <span><strong>Year:</strong> {{ car.year }}</span>
+                        </div>
+                    </div>
+                    <div class="col-6 mb-3">
+                        <div class="d-flex align-items-center">
+                            <i class="fas fa-gas-pump me-2 text-primary"></i>
+                            <span><strong>Fuel:</strong> Gasoline</span>
+                        </div>
+                    </div>
+                    <div class="col-6 mb-3">
+                        <div class="d-flex align-items-center">
+                            <i class="fas fa-cogs me-2 text-primary"></i>
+                            <span><strong>Transmission:</strong> Automatic</span>
+                        </div>
+                    </div>
+                    <div class="col-6 mb-3">
+                        <div class="d-flex align-items-center">
+                            <i class="fas fa-users me-2 text-primary"></i>
+                            <span><strong>Seats:</strong> 5</span>
+                        </div>
+                    </div>
+                    <div class="col-6 mb-3">
+                        <div class="d-flex align-items-center">
+                            <i class="fas fa-suitcase me-2 text-primary"></i>
+                            <span><strong>Luggage:</strong> 3 Bags</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="car-price mb-4">
+                <h3>${{ car.daily_price }} <small class="text-muted">per day</small></h3>
+            </div>
+            <div class="car-actions">
+                {% if car.status == 'available' %}
+                <a href="{{ url_for('book_car', car_id=car.id) }}" class="btn btn-primary btn-lg">Book Now</a>
+                {% else %}
+                <button class="btn btn-secondary btn-lg" disabled>Currently Unavailable</button>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+    
+    <div class="car-description mb-5">
+        <div class="card">
+            <div class="card-header">
+                <h3>Description</h3>
+            </div>
+            <div class="card-body">
+                <p>The {{ car.name }} is a reliable and comfortable vehicle perfect for both short and long trips. With its excellent fuel efficiency and spacious interior, it provides a smooth driving experience for all passengers.</p>
+                <p>This car comes equipped with modern features including GPS navigation, Bluetooth connectivity, backup camera, and climate control to ensure a comfortable and safe journey.</p>
+            </div>
+        </div>
+    </div>
+    
+    <div class="car-features mb-5">
+        <div class="card">
+            <div class="card-header">
+                <h3>Features</h3>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-4 mb-3">
+                        <div class="d-flex align-items-center">
+                            <i class="fas fa-check-circle me-2 text-success"></i>
+                            <span>Air Conditioning</span>
+                        </div>
+                    </div>
+                    <div class="col-md-4 mb-3">
+                        <div class="d-flex align-items-center">
+                            <i class="fas fa-check-circle me-2 text-success"></i>
+                            <span>Bluetooth</span>
+                        </div>
+                    </div>
+                    <div class="col-md-4 mb-3">
+                        <div class="d-flex align-items-center">
+                            <i class="fas fa-check-circle me-2 text-success"></i>
+                            <span>GPS Navigation</span>
+                        </div>
+                    </div>
+                    <div class="col-md-4 mb-3">
+                        <div class="d-flex align-items-center">
+                            <i class="fas fa-check-circle me-2 text-success"></i>
+                            <span>USB Charging Ports</span>
+                        </div>
+                    </div>
+                    <div class="col-md-4 mb-3">
+                        <div class="d-flex align-items-center">
+                            <i class="fas fa-check-circle me-2 text-success"></i>
+                            <span>Backup Camera</span>
+                        </div>
+                    </div>
+                    <div class="col-md-4 mb-3">
+                        <div class="d-flex align-items-center">
+                            <i class="fas fa-check-circle me-2 text-success"></i>
+                            <span>Cruise Control</span>
+                        </div>
+                    </div>
+                    <div class="col-md-4 mb-3">
+                        <div class="d-flex align-items-center">
+                            <i class="fas fa-check-circle me-2 text-success"></i>
+                            <span>Power Windows</span>
+                        </div>
+                    </div>
+                    <div class="col-md-4 mb-3">
+                        <div class="d-flex align-items-center">
+                            <i class="fas fa-check-circle me-2 text-success"></i>
+                            <span>Power Locks</span>
+                        </div>
+                    </div>
+                    <div class="col-md-4 mb-3">
+                        <div class="d-flex align-items-center">
+                            <i class="fas fa-check-circle me-2 text-success"></i>
+                            <span>Audio System</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="related-cars">
+        <h3 class="mb-4">Similar Cars</h3>
+        <div class="row">
+            <div class="col-md-4 mb-4">
+                <div class="card car-card">
+                    <img src="{{ url_for('static', filename='images/Toyota Camry.jpg') }}" class="card-img-top car-img" alt="Related Car 1">
+                    <div class="card-body">
+                        <h5 class="card-title">Toyota Camry</h5>
+                        <p class="mb-2"><strong>Price:</strong> $50/day</p>
+                        <div class="d-flex justify-content-between align-items-center">
+                            <a href="#" class="btn btn-outline-primary">View Details</a>
+                            <a href="#" class="btn btn-primary">Book Now</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 mb-4">
+                <div class="card car-card">
+                    <img src="{{ url_for('static', filename='images/Honda Accord.jpg') }}" class="card-img-top car-img" alt="Related Car 2">
+                    <div class="card-body">
+                        <h5 class="card-title">Honda Accord</h5>
+                        <p class="mb-2"><strong>Price:</strong> $55/day</p>
+                        <div class="d-flex justify-content-between align-items-center">
+                            <a href="#" class="btn btn-outline-primary">View Details</a>
+                            <a href="#" class="btn btn-primary">Book Now</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 mb-4">
+                <div class="card car-card">
+                    <img src="{{ url_for('static', filename='images/Nissan Altima.jpg') }}" class="card-img-top car-img" alt="Related Car 3">
+                    <div class="card-body">
+                        <h5 class="card-title">Nissan Altima</h5>
+                        <p class="mb-2"><strong>Price:</strong> $48/day</p>
+                        <div class="d-flex justify-content-between align-items-center">
+                            <a href="#" class="btn btn-outline-primary">View Details</a>
+                            <a href="#" class="btn btn-primary">Book Now</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %} 

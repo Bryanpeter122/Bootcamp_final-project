@@ -1,0 +1,40 @@
+{% extends 'admin/base.html' %}
+
+{% block title %}Reports{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+    <div class="row">
+        <div class="col-md-12">
+            <h2>Reports</h2>
+            <p class="lead">Generate and view system reports</p>
+            
+            <div class="row mt-4">
+                <div class="col-md-6">
+                    <div class="card mb-4">
+                        <div class="card-header">
+                            <h5>Rental Reports</h5>
+                        </div>
+                        <div class="card-body">
+                            <p>View rental activity for specific date ranges.</p>
+                            <a href="{{ url_for('admin.rental_reports') }}" class="btn btn-primary">View Rental Reports</a>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col-md-6">
+                    <div class="card mb-4">
+                        <div class="card-header">
+                            <h5>Transaction Reports</h5>
+                        </div>
+                        <div class="card-body">
+                            <p>View financial transactions for specific date ranges.</p>
+                            <a href="{{ url_for('admin.transaction_reports') }}" class="btn btn-primary">View Transaction Reports</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %} 

@@ -1,0 +1,124 @@
+{% extends 'base.html' %}
+
+{% block title %}My Rentals - Car Rental System{% endblock %}
+
+{% block content %}
+<div class="container py-4">
+    <h1 class="mb-4">My Rental History</h1>
+    
+    <ul class="nav nav-tabs mb-4" id="rentalTabs" role="tablist">
+        <li class="nav-item" role="presentation">
+            <button class="nav-link active" id="active-tab" data-bs-toggle="tab" data-bs-target="#active-rentals" type="button" role="tab" aria-controls="active-rentals" aria-selected="true">Active Rentals</button>
+        </li>
+        <li class="nav-item" role="presentation">
+            <button class="nav-link" id="past-tab" data-bs-toggle="tab" data-bs-target="#past-rentals" type="button" role="tab" aria-controls="past-rentals" aria-selected="false">Past Rentals</button>
+        </li>
+    </ul>
+    
+    <div class="tab-content" id="rentalTabsContent">
+        <div class="tab-pane fade show active" id="active-rentals" role="tabpanel" aria-labelledby="active-tab">
+            {% if active_rentals %}
+                <div class="table-responsive">
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th>Car</th>
+                                <th>Pickup Date</th>
+                                <th>Return Date</th>
+                                <th>Total Price</th>
+                                <th>Status</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for rental in active_rentals %}
+                            <tr>
+                                <td>
+                                    <div class="d-flex align-items-center">
+                                        <img src="{{ url_for('static', filename='images/' + rental.car.image) }}" alt="{{ rental.car.name }}" class="img-thumbnail me-2" style="width: 60px; height: 40px; object-fit: cover;">
+                                        <span>{{ rental.car.name }}</span>
+                                    </div>
+                                </td>
+                                <td>{{ rental.date_rent.strftime('%b %d, %Y') }}</td>
+                                <td>{{ rental.date_return.strftime('%b %d, %Y') }}</td>
+                                <td>${{ "%.2f"|format(rental.payment) }}</td>
+                                <td>
+                                    <span class="badge 
+                                        {% if rental.status == 'pending' %}bg-warning
+                                        {% elif rental.status == 'confirmed' %}bg-info
+                                        {% elif rental.status == 'active' %}bg-primary
+                                        {% elif rental.status == 'completed' %}bg-success
+                                        {% else %}bg-danger{% endif %}">
+                                        {{ rental.status|capitalize }}
+                                    </span>
+                                </td>
+                                <td>
+                                    <div class="btn-group">
+                                        <a href="{{ url_for('car_details', car_id=rental.car.id) }}" class="btn btn-sm btn-outline-primary">View Car</a>
+                                        {% if rental.status in ['pending', 'confirmed'] %}
+                                        <a href="{{ url_for('cancel_booking', rental_id=rental.id) }}" class="btn btn-sm btn-danger" onclick="return confirm('Are you sure you want to cancel this booking?');">Cancel</a>
+                                        {% endif %}
+                                    </div>
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            {% else %}
+                <div class="alert alert-info">
+                    <p class="mb-0">You don't have any active rentals. <a href="{{ url_for('cars') }}">Browse our cars</a> to make a new booking.</p>
+                </div>
+            {% endif %}
+        </div>
+        
+        <div class="tab-pane fade" id="past-rentals" role="tabpanel" aria-labelledby="past-tab">
+            {% if past_rentals %}
+                <div class="table-responsive">
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th>Car</th>
+                                <th>Pickup Date</th>
+                                <th>Return Date</th>
+                                <th>Total Price</th>
+                                <th>Status</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for rental in past_rentals %}
+                            <tr>
+                                <td>
+                                    <div class="d-flex align-items-center">
+                                        <img src="{{ url_for('static', filename='images/' + rental.car.image) }}" alt="{{ rental.car.name }}" class="img-thumbnail me-2" style="width: 60px; height: 40px; object-fit: cover;">
+                                        <span>{{ rental.car.name }}</span>
+                                    </div>
+                                </td>
+                                <td>{{ rental.date_rent.strftime('%b %d, %Y') }}</td>
+                                <td>{{ rental.date_return.strftime('%b %d, %Y') }}</td>
+                                <td>${{ "%.2f"|format(rental.payment) }}</td>
+                                <td>
+                                    <span class="badge 
+                                        {% if rental.status == 'completed' %}bg-success
+                                        {% else %}bg-danger{% endif %}">
+                                        {{ rental.status|capitalize }}
+                                    </span>
+                                </td>
+                                <td>
+                                    <a href="{{ url_for('car_details', car_id=rental.car.id) }}" class="btn btn-sm btn-outline-primary">View Car</a>
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            {% else %}
+                <div class="alert alert-info">
+                    <p class="mb-0">You don't have any past rentals.</p>
+                </div>
+            {% endif %}
+        </div>
+    </div>
+</div>
+{% endblock %} 

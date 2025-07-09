@@ -1,0 +1,88 @@
+{% extends 'admin/base.html' %}
+
+{% block title %}Vehicles Management{% endblock %}
+
+{% block header %}Vehicles Management{% endblock %}
+
+{% block header_buttons %}
+<a href="{{ url_for('admin.add_vehicle') }}" class="btn btn-primary">
+    <i class="bi bi-plus-circle"></i> Add Vehicle
+</a>
+{% endblock %}
+
+{% block content %}
+<div class="card">
+    <div class="card-body">
+        <div class="table-responsive">
+            <table class="table table-striped table-hover">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Image</th>
+                        <th>Name</th>
+                        <th>Brand/Model</th>
+                        <th>Year</th>
+                        <th>Type</th>
+                        <th>Daily Price</th>
+                        <th>Status</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for car in cars %}
+                    <tr>
+                        <td>{{ car.id }}</td>
+                        <td>
+                            <img src="{{ url_for('static', filename='images/' + car.image) }}" alt="{{ car.name }}" class="img-thumbnail" style="width: 80px; height: 60px; object-fit: cover;">
+                        </td>
+                        <td>{{ car.name }}</td>
+                        <td>{{ car.brand }} {{ car.model }}</td>
+                        <td>{{ car.year }}</td>
+                        <td>{{ car.car_type }}</td>
+                        <td>${{ "%.2f"|format(car.daily_price) }}</td>
+                        <td>
+                            <span class="badge {% if car.status == 'available' %}bg-success{% elif car.status == 'booked' %}bg-warning{% elif car.status == 'rented' %}bg-primary{% else %}bg-danger{% endif %}">
+                                {{ car.status }}
+                            </span>
+                        </td>
+                        <td>
+                            <div class="btn-group">
+                                <a href="{{ url_for('admin.edit_vehicle', car_id=car.id) }}" class="btn btn-sm btn-warning">
+                                    <i class="bi bi-pencil"></i>
+                                </a>
+                                <button type="button" class="btn btn-sm btn-danger" data-bs-toggle="modal" data-bs-target="#deleteModal{{ car.id }}">
+                                    <i class="bi bi-trash"></i>
+                                </button>
+                            </div>
+                            
+                            <!-- Delete Modal -->
+                            <div class="modal fade" id="deleteModal{{ car.id }}" tabindex="-1" aria-labelledby="deleteModalLabel{{ car.id }}" aria-hidden="true">
+                                <div class="modal-dialog">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title" id="deleteModalLabel{{ car.id }}">Confirm Delete</h5>
+                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                        </div>
+                                        <div class="modal-body">
+                                            Are you sure you want to delete the vehicle "{{ car.name }}"?
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                                            <a href="{{ url_for('admin.delete_vehicle', car_id=car.id) }}" class="btn btn-danger">Delete</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                    {% else %}
+                    <tr>
+                        <td colspan="9" class="text-center">No vehicles found</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+{% endblock %} 

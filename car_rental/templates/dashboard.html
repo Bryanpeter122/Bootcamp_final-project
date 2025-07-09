@@ -1,0 +1,127 @@
+{% extends 'base.html' %}
+
+{% block title %}Dashboard - Car Rental System{% endblock %}
+
+{% block content %}
+<div class="dashboard-container">
+    <div class="dashboard-header">
+        <h1>Welcome, {{ user.fname }}</h1>
+        <p class="text-muted">Manage your rentals and account information</p>
+    </div>
+    
+    <div class="row mb-4">
+        <div class="col-md-3 mb-4">
+            <div class="card dashboard-card">
+                <div class="card-body text-center">
+                    <div class="dashboard-icon">
+                        <i class="fas fa-car"></i>
+                    </div>
+                    <h5 class="card-title">Book a Car</h5>
+                    <p class="card-text">Find and book your next rental car</p>
+                    <a href="{{ url_for('cars') }}" class="btn btn-primary">View Cars</a>
+                </div>
+            </div>
+        </div>
+        
+        <div class="col-md-3 mb-4">
+            <div class="card dashboard-card">
+                <div class="card-body text-center">
+                    <div class="dashboard-icon">
+                        <i class="fas fa-history"></i>
+                    </div>
+                    <h5 class="card-title">View My Rentals</h5>
+                    <p class="card-text">Check your active and past rentals</p>
+                    <a href="{{ url_for('my_rentals') }}" class="btn btn-primary">View Rentals</a>
+                </div>
+            </div>
+        </div>
+        
+        <div class="col-md-3 mb-4">
+            <div class="card dashboard-card">
+                <div class="card-body text-center">
+                    <div class="dashboard-icon">
+                        <i class="fas fa-user-circle"></i>
+                    </div>
+                    <h5 class="card-title">View Profile</h5>
+                    <p class="card-text">Update your account information</p>
+                    <a href="{{ url_for('profile') }}" class="btn btn-primary">View Profile</a>
+                </div>
+            </div>
+        </div>
+        
+        <div class="col-md-3 mb-4">
+            <div class="card dashboard-card">
+                <div class="card-body text-center">
+                    <div class="dashboard-icon">
+                        <i class="fas fa-bell"></i>
+                    </div>
+                    <h5 class="card-title">Notifications</h5>
+                    <p class="card-text">Check your alerts and notifications</p>
+                    <a href="#" class="btn btn-primary">View Notifications</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    {% if upcoming_rentals %}
+    <div class="upcoming-rentals mb-5">
+        <div class="card">
+            <div class="card-header">
+                <h4>Upcoming Reservation</h4>
+            </div>
+            <div class="card-body">
+                {% for rental in upcoming_rentals %}
+                <div class="d-flex justify-content-between align-items-center mb-3 {% if not loop.last %}border-bottom pb-3{% endif %}">
+                    <div>
+                        <h5 class="mb-1">Car Model: {{ rental.car.name }}</h5>
+                        <p class="mb-0">Dates: {{ rental.date_rent.strftime('%b %d, %Y') }} - {{ rental.date_return.strftime('%b %d, %Y') }}</p>
+                    </div>
+                    <a href="{{ url_for('car_details', car_id=rental.car.id) }}" class="btn btn-outline-primary btn-sm">View Details</a>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+    {% endif %}
+    
+    {% if active_rentals %}
+    <div class="active-rentals">
+        <div class="card">
+            <div class="card-header">
+                <h4>Active Rentals</h4>
+            </div>
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>Car</th>
+                                <th>Pickup Date</th>
+                                <th>Return Date</th>
+                                <th>Status</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for rental in active_rentals %}
+                            <tr>
+                                <td>{{ rental.car.name }}</td>
+                                <td>{{ rental.date_rent.strftime('%b %d, %Y') }}</td>
+                                <td>{{ rental.date_return.strftime('%b %d, %Y') }}</td>
+                                <td>
+                                    <span class="badge bg-success">{{ rental.status|capitalize }}</span>
+                                </td>
+                                <td>
+                                    <a href="{{ url_for('car_details', car_id=rental.car.id) }}" class="btn btn-sm btn-info">View</a>
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% endif %}
+</div>
+{% endblock %} 

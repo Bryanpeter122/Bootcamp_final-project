@@ -1,0 +1,101 @@
+{% extends 'base.html' %}
+
+{% block title %}Car Listing - Car Rental System{% endblock %}
+
+{% block content %}
+<div class="car-listing-container">
+    <div class="row mb-4">
+        <div class="col-md-8">
+            <h1>Car Listing</h1>
+            <p class="text-muted">Browse our selection of vehicles</p>
+        </div>
+        <div class="col-md-4 text-end">
+            <form class="d-flex">
+                <input class="form-control me-2" type="search" placeholder="Search cars..." aria-label="Search">
+                <button class="btn btn-outline-primary" type="submit">Search</button>
+            </form>
+        </div>
+    </div>
+    
+    <div class="filter-section mb-4">
+        <div class="row">
+            <div class="col-md-3 mb-3">
+                <select class="form-select" aria-label="Brand filter">
+                    <option selected>Brand</option>
+                    <option value="toyota">Toyota</option>
+                    <option value="honda">Honda</option>
+                    <option value="ford">Ford</option>
+                    <option value="chevrolet">Chevrolet</option>
+                    <option value="nissan">Nissan</option>
+                </select>
+            </div>
+            <div class="col-md-3 mb-3">
+                <select class="form-select" aria-label="Type filter">
+                    <option selected>Type</option>
+                    <option value="sedan">Sedan</option>
+                    <option value="suv">SUV</option>
+                    <option value="truck">Truck</option>
+                    <option value="van">Van</option>
+                    <option value="luxury">Luxury</option>
+                </select>
+            </div>
+            <div class="col-md-3 mb-3">
+                <select class="form-select" aria-label="Price filter">
+                    <option selected>Price</option>
+                    <option value="low">Low to High</option>
+                    <option value="high">High to Low</option>
+                </select>
+            </div>
+            <div class="col-md-3 mb-3">
+                <select class="form-select" aria-label="Availability filter">
+                    <option selected>Availability</option>
+                    <option value="available">Available Now</option>
+                    <option value="all">All Cars</option>
+                </select>
+            </div>
+        </div>
+    </div>
+    
+    <div class="row">
+        {% for car in cars %}
+        <div class="col-md-4 mb-4">
+            <div class="card car-card h-100">
+                <img src="{{ url_for('static', filename='images/' + car.image) }}" class="card-img-top car-img" alt="{{ car.name }}">
+                <div class="card-body">
+                    <h5 class="card-title">{{ car.name }}</h5>
+                    <div class="car-details mb-3">
+                        <p class="mb-1"><strong>Brand:</strong> {{ car.brand }}</p>
+                        <p class="mb-1"><strong>Type:</strong> {{ car.car_type }}</p>
+                        <p class="mb-0"><strong>Price:</strong> ${{ car.daily_price }} per day</p>
+                    </div>
+                    <div class="d-flex justify-content-between align-items-center">
+                        <a href="{{ url_for('car_details', car_id=car.id) }}" class="btn btn-outline-primary">View Details</a>
+                        <a href="{{ url_for('book_car', car_id=car.id) }}" class="btn btn-primary">Book Now</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% else %}
+        <div class="col-12">
+            <div class="alert alert-info">
+                <p class="mb-0">No cars available at the moment. Please check back later.</p>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+    
+    <nav aria-label="Page navigation" class="mt-4">
+        <ul class="pagination justify-content-center">
+            <li class="page-item disabled">
+                <a class="page-link" href="#" tabindex="-1" aria-disabled="true">Previous</a>
+            </li>
+            <li class="page-item active"><a class="page-link" href="#">1</a></li>
+            <li class="page-item"><a class="page-link" href="#">2</a></li>
+            <li class="page-item"><a class="page-link" href="#">3</a></li>
+            <li class="page-item">
+                <a class="page-link" href="#">Next</a>
+            </li>
+        </ul>
+    </nav>
+</div>
+{% endblock %} 
